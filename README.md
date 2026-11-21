@@ -152,7 +152,7 @@ left for the rest of OVOS.
 
 ## Install
 ```bash
-pip install --pre ovos-skill-jamband
+pip install ovos-skill-jamband
 ```
 
 ## Development
