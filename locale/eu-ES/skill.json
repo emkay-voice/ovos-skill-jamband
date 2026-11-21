@@ -1,0 +1,26 @@
+{
+  "skill_id": "ovos-skill-jamband.emkay-voice",
+  "source": "https://github.com/emkay-voice/ovos-skill-jamband",
+  "package_name": "ovos-skill-jamband",
+  "pip_spec": "ovos-skill-jamband",
+  "license": "Apache-2.0",
+  "author": "emkay-voice",
+  "name": "Jam taldea",
+  "description": "Ahotsarekin zuzentzen duzun taldea: eskatu bateria, gero baxua, gero talde osoa - swing, blues, rock, funk, disco, reggae, bossa edo tango, edozein tonutan. Gailuaren MIDI tresnak jotzen du.",
+  "examples": [
+    "egin dezagun jam bat",
+    "blues bat mi-n",
+    "gehitu baxua",
+    "talde osoa",
+    "azkarrago",
+    "egin reggae",
+    "amaitu dezagun"
+  ],
+  "tags": [
+    "musika",
+    "jam",
+    "taldea",
+    "dibertigarria"
+  ],
+  "icon": "https://raw.githubusercontent.com/emkay-voice/ovos-skill-jamband/main/icon.png"
+}

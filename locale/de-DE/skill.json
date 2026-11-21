@@ -1,0 +1,26 @@
+{
+  "skill_id": "ovos-skill-jamband.emkay-voice",
+  "source": "https://github.com/emkay-voice/ovos-skill-jamband",
+  "package_name": "ovos-skill-jamband",
+  "pip_spec": "ovos-skill-jamband",
+  "license": "Apache-2.0",
+  "author": "emkay-voice",
+  "name": "Jamband",
+  "description": "Eine Band, die du mit der Stimme leitest: erst Schlagzeug, dann Bass, dann die ganze Band - Swing, Blues, Rock, Funk, Disco, Reggae, Bossa oder Tango, in jeder Tonart. Gespielt vom MIDI-Instrument des Geräts.",
+  "examples": [
+    "lass uns jammen",
+    "jam einen Blues in E",
+    "Bass dazu",
+    "die ganze Band",
+    "schneller",
+    "mach Reggae draus",
+    "lass uns aufhören"
+  ],
+  "tags": [
+    "Musik",
+    "Jam",
+    "Band",
+    "Spaß"
+  ],
+  "icon": "https://raw.githubusercontent.com/emkay-voice/ovos-skill-jamband/main/icon.png"
+}

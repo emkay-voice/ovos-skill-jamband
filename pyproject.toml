@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos-skill-jamband"
+version = "0.1.0a1"
+description = "OVOS jam band: ask for drums, then bass, then the whole band - a band you lead with your voice, in any style and key, played by the device's MIDI instrument"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [{name = "Andreas Lorensen"}]
+requires-python = ">=3.10"
+keywords = ["ovos", "openvoiceos", "skill", "voice", "assistant", "music", "jam", "band", "midi", "backing track", "emkay"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Sound/Audio :: MIDI",
+]
+dependencies = [
+    "ovos-workshop>=0.0.15,<10.0.0",
+    "ovos-phal-plugin-midi>=0.1.0a2",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/emkay-voice/ovos-skill-jamband"
+Issues = "https://github.com/emkay-voice/ovos-skill-jamband/issues"
+Emkay = "https://github.com/emkay-voice/emkay"
+Icon = "https://raw.githubusercontent.com/emkay-voice/ovos-skill-jamband/main/icon.png"
+
+[project.entry-points."opm.skill"]
+"ovos-skill-jamband.emkay-voice" = "ovos_skill_jamband:JamBandSkill"
+
+[tool.setuptools]
+packages = ["ovos_skill_jamband"]
+
+[tool.setuptools.package-dir]
+ovos_skill_jamband = ""
+
+[tool.setuptools.package-data]
+ovos_skill_jamband = ["locale/**/*", "*.png"]

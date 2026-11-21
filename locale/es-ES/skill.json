@@ -1,0 +1,26 @@
+{
+  "skill_id": "ovos-skill-jamband.emkay-voice",
+  "source": "https://github.com/emkay-voice/ovos-skill-jamband",
+  "package_name": "ovos-skill-jamband",
+  "pip_spec": "ovos-skill-jamband",
+  "license": "Apache-2.0",
+  "author": "emkay-voice",
+  "name": "Banda de jam",
+  "description": "Una banda que diriges con la voz: pide batería, luego bajo, luego toda la banda - swing, blues, rock, funk, disco, reggae, bossa o tango, en cualquier tono. La toca el instrumento MIDI del dispositivo.",
+  "examples": [
+    "vamos a improvisar",
+    "un blues en mi",
+    "añade el bajo",
+    "toda la banda",
+    "más rápido",
+    "ponlo en reggae",
+    "terminemos"
+  ],
+  "tags": [
+    "música",
+    "jam",
+    "banda",
+    "diversión"
+  ],
+  "icon": "https://raw.githubusercontent.com/emkay-voice/ovos-skill-jamband/main/icon.png"
+}

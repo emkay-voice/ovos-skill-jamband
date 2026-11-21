@@ -1,0 +1,9 @@
+egin dezagun jam bat
+hasi jam bat
+jo dezagun elkarrekin
+hasi taldea
+jam bat egin
+jam {query}
+egin dezagun {query} jam bat
+hasi {query} jam bat
+jo {query} bat
