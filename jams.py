@@ -21,8 +21,12 @@ from .jam import render
 PPQ = 480
 
 
+#: letters NFKD does not take apart, so they would vanish from a file name
+_LETTERS = str.maketrans({"ø": "o", "æ": "ae", "œ": "oe", "ß": "ss", "đ": "d", "ł": "l", "þ": "th", "ð": "d"})
+
+
 def slug(name: str) -> str:
-    s = unicodedata.normalize("NFKD", name.lower()).encode("ascii", "ignore").decode()
+    s = unicodedata.normalize("NFKD", name.lower().translate(_LETTERS)).encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9]+", "-", s).strip("-") or "jam"
 
 
@@ -57,6 +61,9 @@ class Jams:
                     d = json.loads(p.read_text(encoding="utf-8"))
                 except (OSError, ValueError):
                     continue
+                # which file it is: the ones that come with the skill apart,
+                # as one of yours can have the same name
+                d["id"] = ("skill:" if bundled else "") + p.stem
                 if bundled:
                     d["bundled"] = True
                 out.append(d)
@@ -91,14 +98,60 @@ class Jams:
         jams = [d for d in self.all() if not d.get("bundled")] or self.all()
         return jams[0] if jams else None
 
-    def delete(self, name: str) -> str | None:
-        d = self.find(name)
+    def get(self, jam_id: str) -> dict | None:
+        """The jam with this id (from :meth:`all`)."""
+        return next((d for d in self.all() if d.get("id") == jam_id), None)
+
+    def rename(self, jam_id: str, name: str) -> dict:
+        """Give one of your jams another name. Raises ValueError when it is
+        not yours, or another of yours already has the name."""
+        d = self.get(jam_id)
+        name = (name or "").strip()
         if not d or d.get("bundled"):
-            return None
-        path = self._path(d["name"])
+            raise ValueError("not yours")
+        if not name:
+            raise ValueError("no name")
+        old, new = self.folder / f"{jam_id}.json", self._path(name)
+        if new != old and new.exists():
+            raise ValueError("taken")
+        data = {k: v for k, v in d.items() if k not in ("id", "bundled")}
+        data["name"] = name
+        new.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+        if new != old:
+            for p in (old, old.with_suffix(".mid")):
+                if p.exists():
+                    p.unlink()
+        try:
+            write_midi(new.with_suffix(".mid"), data)
+        except Exception:      # the jam is renamed; the MIDI file is a bonus
+            pass
+        return self.get(new.stem)
+
+    def remove(self, jam_id: str) -> bool:
+        """Delete one of your jams by id; the skill's own stay."""
+        d = self.get(jam_id)
+        if not d or d.get("bundled"):
+            return False
+        path = self.folder / f"{jam_id}.json"
         for p in (path, path.with_suffix(".mid")):
             if p.exists():
                 p.unlink()
+        return True
+
+    def midi(self, jam_id: str) -> bytes | None:
+        """A jam as a Standard MIDI File."""
+        d = self.get(jam_id)
+        if not d:
+            return None
+        made = self.folder / f"{jam_id}.mid"
+        if not d.get("bundled") and made.is_file():
+            return made.read_bytes()
+        return midi_bytes(d, d.get("name", ""))
+
+    def delete(self, name: str) -> str | None:
+        d = self.find(name)
+        if not d or not self.remove(d["id"]):
+            return None
         return d["name"]
 
 

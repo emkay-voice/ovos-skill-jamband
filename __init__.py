@@ -86,6 +86,16 @@ class JamBandSkill(ConversationalSkill):
         self.listening = False                  # hearing your melody
         super().__init__(*args, **kwargs)
 
+    def initialize(self):
+        # the control panel's Jamband page (panel/), over the message bus
+        for msg_type, handler in (("ovos.jamband.jams.list", self.handle_panel_list),
+                                  ("ovos.jamband.jams.rename", self.handle_panel_rename),
+                                  ("ovos.jamband.jams.delete", self.handle_panel_delete),
+                                  ("ovos.jamband.jams.midi", self.handle_panel_midi),
+                                  ("ovos.jamband.jams.play", self.handle_panel_play),
+                                  ("ovos.jamband.stop", self.handle_panel_stop)):
+            self.add_event(msg_type, handler)
+
     def words(self) -> Words:
         lang = self.lang
         if lang not in self._words:
@@ -179,10 +189,14 @@ class JamBandSkill(ConversationalSkill):
         if not found:
             self._say_list("not_found", {"name": name})
             return
+        self._play(found)
+
+    def _play(self, found: dict) -> bool:
+        """Play a saved jam as it was; False when there is no MIDI instrument."""
         band = self._band()
         if not band:
             self.speak_dialog("no_midi")
-            return
+            return False
         title = self._title(found)
         jam = self._new_jam(band, State.from_dict(found["first"]), found.get("log"))
         self.playing_name = title
@@ -190,6 +204,7 @@ class JamBandSkill(ConversationalSkill):
         self.speak_dialog("playing", {"name": title}, wait=True)
         jam.start()
         self._keep_active()
+        return True
 
     @intent_handler("surprise.intent")
     def handle_surprise(self, message):
@@ -248,6 +263,60 @@ class JamBandSkill(ConversationalSkill):
             return "".join(names)
         word = (self.words().voc.get("and_word") or ["and"])[-1]
         return ", ".join(names[:-1]) + f" {word} " + names[-1]
+
+    # ------------------------------------------------------------ the control panel
+    def _summary(self, d: dict) -> dict:
+        first = d.get("first") or {}
+        try:
+            key = M.Key(*first["key"]).name if first.get("key") else ""
+        except Exception:
+            key = ""
+        return {"id": d.get("id"), "name": self._title(d), "bundled": bool(d.get("bundled")),
+                "saved": d.get("saved"), "bars": d.get("bars", 0), "style": first.get("style", ""),
+                "key": key, "tempo": first.get("tempo")}
+
+    def _panel_list(self) -> dict:
+        return {"jams": [self._summary(d) for d in self.jams.all()],
+                "playing": self.playing_name if self.jam else ""}
+
+    def handle_panel_list(self, message):
+        self.bus.emit(message.response(self._panel_list()))
+
+    def handle_panel_rename(self, message):
+        try:
+            self.jams.rename(message.data.get("id", ""), message.data.get("name", ""))
+            out = self._panel_list()
+        except ValueError as err:
+            out = {"error": str(err)}
+        self.bus.emit(message.response(out))
+
+    def handle_panel_delete(self, message):
+        if self.jams.remove(message.data.get("id", "")):
+            out = self._panel_list()
+        else:
+            out = {"error": "not yours"}
+        self.bus.emit(message.response(out))
+
+    def handle_panel_midi(self, message):
+        import base64
+        d = self.jams.get(message.data.get("id", ""))
+        data = self.jams.midi(d["id"]) if d else None
+        self.bus.emit(message.response(
+            {"name": self._title(d), "midi": base64.b64encode(data).decode("ascii")} if data
+            else {"error": "not found"}))
+
+    def handle_panel_play(self, message):
+        d = self.jams.get(message.data.get("id", ""))
+        if not d:
+            self.bus.emit(message.response({"error": "not found"}))
+            return
+        # it says what it plays before it starts; the page need not wait
+        threading.Thread(target=self._play, args=(d,), daemon=True).start()
+        self.bus.emit(message.response({"playing": self._title(d)}))
+
+    def handle_panel_stop(self, message):
+        self.stop()
+        self.bus.emit(message.response(self._panel_list()))
 
     # ------------------------------------------------------------ questions
     def _ask(self, what: str, dialog: str, data: dict | None = None, **more):
