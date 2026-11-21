@@ -1,0 +1,15 @@
+{
+ "names": ["Frère Jacques", "Brother John", "Are you sleeping", "Mester Jakob", "Bruder Jakob", "Vader Jacob", "Martinillo", "Fra Martino", "Frei João", "Frare Jaume", "Irmán Xacobe", "Anaia Jakobe"],
+ "key": "C",
+ "say": {"da": "Mester Jakob", "de": "Bruder Jakob", "nl": "Vader Jacob", "es": "Martinillo", "it": "Fra Martino", "pt": "Frei João", "ca": "Frare Jaume", "gl": "Irmán Xacobe", "eu": "Anaia Jakobe"},
+ "notes": [
+  "C4 D4 E4 C4",
+  "C4 D4 E4 C4",
+  "E4 F4 G4:2",
+  "E4 F4 G4:2",
+  "G4:.5 A4:.5 G4:.5 F4:.5 E4 C4",
+  "G4:.5 A4:.5 G4:.5 F4:.5 E4 C4",
+  "C4 G3 C4:2",
+  "C4 G3 C4:2"
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "names": ["Eine kleine Nachtmusik", "A little night music", "Mozart", "En lille natmusik", "Lille natmusik", "Een kleine nachtmuziek", "Pequeña serenata nocturna", "Petite musique de nuit", "Piccola serenata notturna", "Pequena serenata noturna", "Petita serenata nocturna"],
+ "key": "G",
+ "say": {"da": "En lille natmusik"},
+ "notes": [
+  "G4 r:.5 D4:.5 G4 r:.5 D4:.5",
+  "G4:.5 D4:.5 G4:.5 B4:.5 D5:2",
+  "C5 r:.5 A4:.5 C5 r:.5 A4:.5",
+  "C5:.5 A4:.5 F#4:.5 A4:.5 D4:2"
+ ]
+}

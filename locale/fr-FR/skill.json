@@ -6,15 +6,18 @@
   "license": "Apache-2.0",
   "author": "emkay-voice",
   "name": "Jam band",
-  "description": "Un groupe que tu diriges à la voix : demande la batterie, puis la basse, puis tout le groupe - swing, blues, rock, funk, disco, reggae, bossa ou tango, dans n'importe quelle tonalité. Joué par l'instrument MIDI de l'appareil.",
+  "description": "Un groupe que tu diriges à la voix : la batterie, puis la basse, puis tout le groupe - swing, blues, rock, funk, disco, reggae, bossa ou tango. Donne-lui une mélodie (fredonnée, jouée, les notes dites ou un air que tout le monde connaît), demande des solos et des breaks, laisse Emkay construire un bœuf avec toi - ou en faire un tout seul. Garde tes bœufs et rejoue-les. Joué par l'instrument MIDI de l'appareil.",
   "examples": [
-    "on fait un bœuf",
+    "faisons un bœuf",
     "un blues en mi",
     "ajoute la basse",
-    "tout le groupe",
-    "plus vite",
-    "passe au reggae",
-    "on termine"
+    "un solo de saxo",
+    "un reggae sur Frère Jacques",
+    "voici ma mélodie",
+    "aide-moi à faire un bœuf",
+    "surprends-moi",
+    "joue mon bœuf Blues du vendredi",
+    "terminons"
   ],
   "tags": [
     "musique",

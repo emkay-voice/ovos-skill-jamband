@@ -1,0 +1,15 @@
+{
+ "names": ["Für Elise", "Fur Elise", "For Elise", "Til Elise", "Voor Elise", "Para Elisa", "Pour Élise", "Per Elisa", "Per a Elisa", "Elisarentzat"],
+ "key": "Am",
+ "say": {"da": "Für Elise", "es": "Para Elisa", "fr": "Pour Élise", "it": "Per Elisa", "pt": "Para Elisa", "ca": "Per a Elisa", "eu": "Elisarentzat"},
+ "notes": [
+  "E5:.5 D#5:.5 E5:.5 D#5:.5 E5:.5 B4:.5 D5:.5 C5:.5",
+  "A4:2 C4:.5 E4:.5 A4",
+  "B4:2 E4:.5 G#4:.5 B4",
+  "C5:2 E4:.5 E5:.5 D#5",
+  "E5:.5 D#5:.5 E5:.5 D#5:.5 E5:.5 B4:.5 D5:.5 C5:.5",
+  "A4:2 C4:.5 E4:.5 A4",
+  "B4:2 E4:.5 C5:.5 B4",
+  "A4:4"
+ ]
+}

@@ -6,14 +6,17 @@
   "license": "Apache-2.0",
   "author": "emkay-voice",
   "name": "Jam taldea",
-  "description": "Ahotsarekin zuzentzen duzun taldea: eskatu bateria, gero baxua, gero talde osoa - swing, blues, rock, funk, disco, reggae, bossa edo tango, edozein tonutan. Gailuaren MIDI tresnak jotzen du.",
+  "description": "Ahotsarekin zuzentzen duzun taldea: eskatu bateria, gero baxua, gero talde osoa - swing, blues, rock, funk, disco, reggae, bossa edo tango. Eman doinu bat (ahopeka, joz, notak esanez edo denok ezagutzen dugun abesti bat), eskatu bakarkakoak eta breakak, utzi Emkayri zurekin jam bat eraikitzen - edo bakarrik bat egiten. Gorde zure jamak eta jo berriro. Gailuaren MIDI tresnak jotzen du.",
   "examples": [
     "egin dezagun jam bat",
     "blues bat mi-n",
     "gehitu baxua",
-    "talde osoa",
-    "azkarrago",
-    "egin reggae",
+    "saxo bakarkako bat",
+    "reggae bat Anaia Jakoberen gainean",
+    "hona hemen nire doinua",
+    "lagundu jam bat egiten",
+    "harritu nazazu",
+    "jo nire jam Ostiraleko bluesa",
     "amaitu dezagun"
   ],
   "tags": [

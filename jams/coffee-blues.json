@@ -1,0 +1,138 @@
+{
+ "name": "Coffee blues",
+ "names": {
+  "en": "Coffee blues",
+  "da": "Kaffeblues",
+  "de": "Kaffee-Blues",
+  "nl": "Koffieblues",
+  "es": "Blues del café",
+  "fr": "Blues du café",
+  "it": "Blues del caffè",
+  "pt": "Blues do café",
+  "ca": "Blues del cafè",
+  "gl": "Blues do café",
+  "eu": "Kafe bluesa"
+ },
+ "first": {
+  "style": "blues",
+  "key": [
+   4,
+   false
+  ],
+  "tempo": 96,
+  "parts": [],
+  "chords": null,
+  "key_chosen": false,
+  "tempo_chosen": false,
+  "melody": null,
+  "lead": "piano",
+  "seed": 4242
+ },
+ "log": [
+  {
+   "bar": 0,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums"
+    ]
+   }
+  },
+  {
+   "bar": 2,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums",
+     "bass"
+    ]
+   }
+  },
+  {
+   "bar": 4,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums",
+     "bass",
+     "piano"
+    ]
+   }
+  },
+  {
+   "bar": 8,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums",
+     "bass",
+     "piano",
+     "guitar"
+    ]
+   }
+  },
+  {
+   "bar": 12,
+   "do": "top",
+   "args": {}
+  },
+  {
+   "bar": 12,
+   "do": "solo",
+   "args": {
+    "part": "guitar",
+    "bars": 12
+   }
+  },
+  {
+   "bar": 24,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums",
+     "bass",
+     "piano",
+     "guitar",
+     "organ"
+    ]
+   }
+  },
+  {
+   "bar": 24,
+   "do": "top",
+   "args": {}
+  },
+  {
+   "bar": 24,
+   "do": "solo",
+   "args": {
+    "part": "sax",
+    "bars": 12
+   }
+  },
+  {
+   "bar": 36,
+   "do": "top",
+   "args": {}
+  },
+  {
+   "bar": 36,
+   "do": "break",
+   "args": {}
+  },
+  {
+   "bar": 40,
+   "do": "solo",
+   "args": {
+    "part": "piano",
+    "bars": 8
+   }
+  },
+  {
+   "bar": 48,
+   "do": "finish",
+   "args": {}
+  }
+ ],
+ "bars": 49
+}

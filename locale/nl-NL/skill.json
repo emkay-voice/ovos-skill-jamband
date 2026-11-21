@@ -6,14 +6,17 @@
   "license": "Apache-2.0",
   "author": "emkay-voice",
   "name": "Jamband",
-  "description": "Een band die je met je stem leidt: vraag om drums, dan bas, dan de hele band - swing, blues, rock, funk, disco, reggae, bossa of tango, in elke toonsoort. Gespeeld door het MIDI-instrument van het apparaat.",
+  "description": "Een band die je met je stem leidt: eerst drums, dan bas, dan de hele band - swing, blues, rock, funk, disco, reggae, bossa of tango. Geef hem een melodie (neuriën, spelen, de noten zeggen of een bekend liedje kiezen), vraag om solo's en breaks, laat Emkay samen met jou een jam bouwen - of er zelf een maken. Bewaar je jams en speel ze opnieuw. Gespeeld door het MIDI-instrument van het apparaat.",
   "examples": [
     "laten we jammen",
     "jam een blues in E",
     "voeg de bas toe",
-    "de hele band",
-    "sneller",
-    "maak er reggae van",
+    "een saxsolo",
+    "een reggae over Vader Jacob",
+    "hier is mijn melodie",
+    "help me een jam te maken",
+    "verras me",
+    "speel mijn jam Vrijdagblues",
     "laten we stoppen"
   ],
   "tags": [

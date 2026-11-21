@@ -1,0 +1,259 @@
+{
+ "name": "Funky Mozart",
+ "names": {
+  "en": "Funky Mozart",
+  "da": "Funky Mozart",
+  "de": "Funky Mozart",
+  "nl": "Funky Mozart",
+  "es": "Mozart funky",
+  "fr": "Mozart funky",
+  "it": "Mozart funky",
+  "pt": "Mozart funky",
+  "ca": "Mozart funky",
+  "gl": "Mozart funky",
+  "eu": "Mozart funky"
+ },
+ "first": {
+  "style": "funk",
+  "key": [
+   7,
+   false
+  ],
+  "tempo": 104,
+  "parts": [],
+  "chords": [
+   [
+    7,
+    "maj"
+   ],
+   [
+    7,
+    "maj"
+   ],
+   [
+    9,
+    "m7"
+   ],
+   [
+    2,
+    "7"
+   ]
+  ],
+  "key_chosen": true,
+  "tempo_chosen": false,
+  "melody": {
+   "notes": [
+    [
+     0.0,
+     67,
+     0.95
+    ],
+    [
+     1.5,
+     62,
+     0.475
+    ],
+    [
+     2.0,
+     67,
+     0.95
+    ],
+    [
+     3.5,
+     62,
+     0.475
+    ],
+    [
+     4.0,
+     67,
+     0.475
+    ],
+    [
+     4.5,
+     62,
+     0.475
+    ],
+    [
+     5.0,
+     67,
+     0.475
+    ],
+    [
+     5.5,
+     71,
+     0.475
+    ],
+    [
+     6.0,
+     74,
+     1.9
+    ],
+    [
+     8.0,
+     72,
+     0.95
+    ],
+    [
+     9.5,
+     69,
+     0.475
+    ],
+    [
+     10.0,
+     72,
+     0.95
+    ],
+    [
+     11.5,
+     69,
+     0.475
+    ],
+    [
+     12.0,
+     72,
+     0.475
+    ],
+    [
+     12.5,
+     69,
+     0.475
+    ],
+    [
+     13.0,
+     66,
+     0.475
+    ],
+    [
+     13.5,
+     69,
+     0.475
+    ],
+    [
+     14.0,
+     62,
+     1.9
+    ]
+   ],
+   "bars": 4
+  },
+  "lead": "sax",
+  "seed": 255512576
+ },
+ "log": [
+  {
+   "bar": 0,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums"
+    ]
+   }
+  },
+  {
+   "bar": 0,
+   "do": "intro",
+   "args": {}
+  },
+  {
+   "bar": 1,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums",
+     "bass"
+    ]
+   }
+  },
+  {
+   "bar": 2,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums",
+     "bass",
+     "guitar"
+    ]
+   }
+  },
+  {
+   "bar": 3,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums",
+     "bass",
+     "guitar",
+     "piano"
+    ]
+   }
+  },
+  {
+   "bar": 3,
+   "do": "change",
+   "args": {
+    "parts": [
+     "drums",
+     "bass",
+     "guitar",
+     "piano",
+     "brass"
+    ]
+   }
+  },
+  {
+   "bar": 12,
+   "do": "top",
+   "args": {}
+  },
+  {
+   "bar": 12,
+   "do": "solo",
+   "args": {
+    "part": "guitar",
+    "bars": 4
+   }
+  },
+  {
+   "bar": 16,
+   "do": "top",
+   "args": {}
+  },
+  {
+   "bar": 16,
+   "do": "solo",
+   "args": {
+    "part": "brass",
+    "bars": 4
+   }
+  },
+  {
+   "bar": 20,
+   "do": "top",
+   "args": {}
+  },
+  {
+   "bar": 20,
+   "do": "solo",
+   "args": {
+    "part": "drums",
+    "bars": 4
+   }
+  },
+  {
+   "bar": 24,
+   "do": "top",
+   "args": {}
+  },
+  {
+   "bar": 24,
+   "do": "break",
+   "args": {}
+  },
+  {
+   "bar": 28,
+   "do": "finish",
+   "args": {}
+  }
+ ],
+ "bars": 29
+}

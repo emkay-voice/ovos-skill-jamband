@@ -1,0 +1,30 @@
+{
+ "tempo": 92,
+ "key": "E",
+ "progression": ["I7", "IV7", "I7", "I7", "IV7", "IV7", "I7", "I7", "V7", "IV7", "I7", "V7"],
+ "band": ["drums", "bass", "piano", "guitar", "organ"],
+ "swing": true,
+ "bass": "boogie",
+ "programs": {"bass": 33, "piano": 0, "guitar": 27, "organ": 17, "strings": 48, "brass": 61, "sax": 66, "bandoneon": 23},
+ "drums": [
+  ["hat", 0, 84],
+  ["hat", 0.5, 62],
+  ["hat", 1, 84],
+  ["hat", 1.5, 62],
+  ["hat", 2, 84],
+  ["hat", 2.5, 62],
+  ["hat", 3, 84],
+  ["hat", 3.5, 62],
+  ["kick", 0, 104],
+  ["kick", 2, 96],
+  ["kick", 2.5, 70],
+  ["snare", 1, 100],
+  ["snare", 3, 100]
+ ],
+ "comp": {
+  "piano": [[0.5, 0.3], [1.5, 0.3], [2.5, 0.3], [3.5, 0.3]],
+  "guitar": [[1, 0.35], [3, 0.35]],
+  "organ": [[0, 3.9]],
+  "bandoneon": [[0, 3.9]]
+ }
+}

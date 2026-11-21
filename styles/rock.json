@@ -1,0 +1,30 @@
+{
+ "tempo": 120,
+ "key": "A",
+ "progression": ["I", "V", "vi", "IV"],
+ "band": ["drums", "bass", "guitar", "piano", "organ"],
+ "swing": false,
+ "bass": "eighths",
+ "programs": {"bass": 33, "piano": 0, "guitar": 29, "organ": 18, "strings": 48, "brass": 61, "sax": 66, "bandoneon": 23},
+ "drums": [
+  ["hat", 0, 78],
+  ["hat", 0.5, 56],
+  ["hat", 1, 78],
+  ["hat", 1.5, 56],
+  ["hat", 2, 78],
+  ["hat", 2.5, 56],
+  ["hat", 3, 78],
+  ["hat", 3.5, 56],
+  ["kick", 0, 112],
+  ["kick", 2, 108],
+  ["kick", 2.5, 84],
+  ["snare", 1, 112],
+  ["snare", 3, 112]
+ ],
+ "comp": {
+  "piano": [[0, 1.9], [2, 1.9]],
+  "guitar": [[0, 0.45], [0.5, 0.45], [1, 0.45], [1.5, 0.45], [2, 0.45], [2.5, 0.45], [3, 0.45], [3.5, 0.45]],
+  "organ": [[0, 3.9]],
+  "bandoneon": [[0, 3.9]]
+ }
+}

@@ -22,6 +22,76 @@ the whole orchestra. Emkay comments as it goes, then listens again.
 You can also say it all at once: "jam a funk in E minor with drums and
 bass", or "jam a blues at 100".
 
+### Moments
+
+```
+"a sax solo" / "a solo"         an instrument improvises for a round of the chords
+"a drum solo"                   the drummer's turn
+"a break"                       everyone hits the one, then silence - and back in
+"from the top"                  the chords start again
+"an intro"                      the last bars lead in, then the top
+```
+
+### Your melody
+
+```
+"here's my melody"              "Let me hear it!" - hum it, sing it, whistle it,
+                                or play it on a MIDI keyboard
+"the notes are C D E C"         or "do re mi do", in your language's note names
+"the melody on sax"             who plays it
+```
+
+Emkay works out the notes, the key they are in, and chords that suit them,
+and the band plays your melody with you. A hummed tune is followed by its
+pitch, cut into notes, put in tune (the key it is in, however you hum) and
+put in time (the jam's tempo, or the one you hummed at).
+
+### Tunes everybody knows
+
+```
+"jam a reggae over Frère Jacques"
+"a bossa over Ode to Joy"       "now Jingle Bells"
+"what tunes do you know?"
+```
+
+The library has tunes that are free to use: traditional songs and nursery
+rhymes, and themes by composers who died long ago (Beethoven, Mozart,
+Grieg ...). Each has its name in every language, so "Mester Jakob", "Bruder
+Jakob" and "Fra Martino" all find Frère Jacques. With
+[ovos-skill-karaoke](https://github.com/emkay-voice/ovos-skill-karaoke)
+installed, its songbook comes too: "a tango over Hey Emkay".
+
+### Let Emkay lead
+
+```
+"help me make a jam"            Emkay asks: which style? which key? - starts
+                                the drums and offers the bass, the piano ...
+                                one by one ("yes" / "no")
+"surprise me"                   Emkay's own jam: a tune from the library, a
+                                style, an intro, the tune, solos, a break,
+                                maybe a key change, and the ending
+"surprise me with tango"
+```
+
+Say anything while Emkay's own jam plays and it is yours to change.
+
+### Saving
+
+```
+"let's finish"                  ... "Shall I save that jam?" - "yes" - "Friday blues"
+"save it as Friday blues"       while it plays
+"play my jam Friday blues"      played as it was; say something, and it's yours again
+"what jams do I have?"
+"delete the jam Friday blues"
+```
+
+A saved jam is everything that happened, bar by bar, so it plays back
+exactly - and when you change it halfway and save it again, you have edited
+it. Each saved jam is also written as a Standard MIDI File next to it, to
+open in any music program (or play with ovos-phal-plugin-midi). A few jams
+come with the skill: Coffee blues, Emkay's Swing, Kitchen tango, Funky Mozart
+and Reggae Jacques.
+
 It speaks every language Emkay does: English, Danish, German, Spanish,
 French, Italian, Dutch, Portuguese (Portugal and Brazil), Catalan, Basque and
 Galician. It understands keys as letters (D, F sharp, B flat; and Danish and
@@ -49,7 +119,8 @@ organ, strings, brass, sax and bandoneon. "The whole band" brings in the
 style's own band, part by part. A key you ask for stays when you change the
 style. The style's default key changes it only if you never chose one.
 
-The screen shows the chord now, big, the next ones, and who is playing.
+The screen shows the chord now, big, the next ones, and who is playing -
+and who solos, a break, and the melody.
 
 ## The band behind it
 
@@ -67,6 +138,12 @@ down.
 How it sounds is up to the plugin. Its own synth needs nothing. With
 FluidSynth and a SoundFont it plays real instrument samples. It can also play
 a real instrument plugged into the device. See its README.
+
+To hear a hummed melody the skill uses the listener's recording mode
+(`recognizer_loop:state.set` "recording", as ovos-dinkum-listener has it;
+Emkay does the same): the band holds still, the microphone records until you
+stop, and the skill reads the recording. Keys played on a MIDI keyboard come
+from the plugin (`ovos.midi.input`).
 
 While the jam plays, what you say goes to it first (OVOS' converse). After
 Emkay answers, it listens again, so you can keep leading the band without
@@ -86,4 +163,4 @@ See [DEVELOPMENT.md](DEVELOPMENT.md).
 **Entertainment**
 
 ## Tags
-#music #jam #band #midi #fun
+#music #jam #band #midi #melody #fun

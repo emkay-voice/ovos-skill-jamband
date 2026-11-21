@@ -6,14 +6,17 @@
   "license": "Apache-2.0",
   "author": "emkay-voice",
   "name": "Jamband",
-  "description": "Et band, du dirigerer med stemmen: bed om trommer, så bas, så hele bandet - i swing, blues, rock, funk, disco, reggae, bossa eller tango, i alle tonearter. Spillet af enhedens MIDI-instrument.",
+  "description": "Et band, du dirigerer med stemmen: bed om trommer, så bas, så hele bandet - i swing, blues, rock, funk, disco, reggae, bossa eller tango. Giv det en melodi (nyn den, spil den, sig tonerne, eller vælg en melodi alle kender), bed om soloer og breaks, lad Emkay bygge et jam med dig - eller lave et helt selv. Gem dine jams og spil dem igen. Spillet af enhedens MIDI-instrument.",
   "examples": [
     "lad os jamme",
     "jam en blues i e",
     "sæt bassen ind",
-    "hele bandet",
-    "hurtigere",
-    "spil det som reggae",
+    "en sax-solo",
+    "en reggae over Mester Jakob",
+    "her er min melodi",
+    "hjælp mig med at lave et jam",
+    "overrask mig",
+    "spil mit jam Fredagsblues",
     "lad os slutte"
   ],
   "tags": [
