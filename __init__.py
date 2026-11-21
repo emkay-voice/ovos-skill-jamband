@@ -636,7 +636,12 @@ class JamBandSkill(ConversationalSkill):
             note = "BREAK"
         elif st.melody and bar >= jam.quiet_until:
             note = f"♪ {names.get(st.lead, st.lead)}"
-        self.gui["image"] = screen.render(title, chord, upcoming, st.parts, names, note)
+        lit = list(st.parts)                       # and who plays your melody, or the solo
+        if jam.soloing:
+            lit.append(jam.soloing)
+        elif st.melody and bar >= jam.quiet_until:
+            lit.append(st.lead)
+        self.gui["image"] = screen.render(title, chord, upcoming, lit, names, note)
         if bar == 0:
             self.gui["title"] = ""
             self.gui["caption"] = ""
