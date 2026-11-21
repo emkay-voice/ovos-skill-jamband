@@ -12,6 +12,8 @@ from conftest import ROOT
 @pytest.fixture
 def skill(monkeypatch):
     monkeypatch.setattr(sk.OVOSSkill, "__init__", lambda self, *a, **k: None)
+    monkeypatch.setattr(sk.ConversationalSkill, "__init__", lambda self, *a, **k: None)
+    monkeypatch.setattr(sk.JamBandSkill, "activate", lambda self, *a, **k: None, raising=False)
     s = sk.JamBandSkill()
     s.skill_id = "ovos-skill-jamband.test"
     monkeypatch.setattr(sk.JamBandSkill, "lang", "en-US", raising=False)
@@ -76,6 +78,16 @@ def test_no_band(skill):
 
 def test_not_jamming_converse_says_nothing(skill):
     assert skill.converse(Message("", {"utterances": ["drums"]})) is False
+    assert skill.can_converse(Message("", {"utterances": ["drums"]})) is False
+
+
+def test_can_converse_only_for_the_band(skill):
+    """OVOS asks the skill first whether a sentence is for it."""
+    skill.handle_jam(MagicMock(data={"utterance": "let's jam"}))
+    assert skill.can_converse(Message("", {"utterances": ["drums"]}))
+    assert skill.can_converse(Message("", {"utterances": ["make it funky"]}))
+    assert not skill.can_converse(Message("", {"utterances": ["what time is it"]}))
+    assert issubclass(sk.JamBandSkill, sk.ConversationalSkill)
 
 
 def test_locales_match():

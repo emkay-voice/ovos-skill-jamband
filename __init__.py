@@ -28,6 +28,11 @@ from ovos_bus_client.message import Message
 from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
 
+try:   # ovos-workshop 8: converse is ConversationalSkill's
+    from ovos_workshop.skills.converse import ConversationalSkill
+except ImportError:  # before it, every OVOSSkill could converse
+    ConversationalSkill = OVOSSkill
+
 from . import screen
 from .jam import Jam
 from .styles import DEFAULT, PARTS, STYLES
@@ -38,7 +43,7 @@ MIDI_WAIT = 3.0             # seconds to wait for the MIDI plugin to answer
 KEEP_ACTIVE_BARS = 8        # say so to OVOS every this many bars: what you say goes to the jam first
 
 
-class JamBandSkill(OVOSSkill):
+class JamBandSkill(ConversationalSkill):
 
     def __init__(self, *args, **kwargs):
         # before OVOSSkill's own setup: its intents can be asked before initialize() has run
@@ -83,6 +88,7 @@ class JamBandSkill(OVOSSkill):
                 change["tempo"] = tempo
             self.jam.change(**change)
             self.jam.start()
+        self._keep_active()
         parts = w.parts(utterance)
         if parts:
             self._add(parts)
@@ -91,51 +97,80 @@ class JamBandSkill(OVOSSkill):
                               expect_response=True)
 
     # ------------------------------------------------------------ while it plays
+    def can_converse(self, message=None) -> bool:
+        """OVOS asks first: is this sentence for the band?"""
+        if not self.jam or not self.jam.running:
+            return False
+        utterances = (message.data.get("utterances") if message else None) or []
+        return not utterances or any(self.understand(u) for u in utterances)
+
     def converse(self, message=None):
         if not self.jam or not self.jam.running or message is None:
             return False
-        utterances = message.data.get("utterances") or []
-        return bool(utterances) and self.command(utterances[0])
+        for utterance in message.data.get("utterances") or []:
+            action = self.understand(utterance)
+            if action:
+                self.do(*action)
+                return True
+        return False
+
+    def understand(self, utterance: str):
+        """What `utterance` asks of the band: (what, value), or None."""
+        w, st = self.words(), self.jam.state
+        if w.has(utterance, "finish"):
+            return ("finish", None)
+        parts = w.parts(utterance)
+        if w.has(utterance, "remove") and parts:
+            return ("remove", parts)
+        if w.has(utterance, "everyone"):
+            return ("everyone", st.style.band)
+        if parts:
+            return ("add", parts)
+        style = w.style(utterance)
+        if style and STYLES[style] is not st.style:
+            return ("style", style)
+        key = w.key(utterance)
+        if key:
+            return ("key", key)
+        tempo = w.tempo(utterance)
+        if tempo:
+            return ("tempo", tempo)
+        if w.has(utterance, "faster"):
+            return ("faster", None)
+        if w.has(utterance, "slower"):
+            return ("slower", None)
+        return None
+
+    def do(self, what, value):
+        w, jam = self.words(), self.jam
+        if what == "finish":
+            self._finish()
+        elif what == "remove":
+            gone = jam.remove(*value)
+            if gone:
+                self.speak_dialog("removed", {"part": self._name(gone[0])}, expect_response=True)
+        elif what in ("everyone", "add"):
+            self._add(value, everyone=what == "everyone")
+        elif what == "style":
+            jam.change(style=STYLES[value])
+            self.speak_dialog("style", {"style": value}, expect_response=True)
+        elif what == "key":
+            jam.change(key=value)
+            self.speak_dialog("key", {"key": w.spoken_key(value)}, expect_response=True)
+        elif what == "tempo":
+            jam.change(tempo=value)
+            self.speak_dialog("tempo", {"tempo": jam.state.tempo}, expect_response=True)
+        else:
+            up = what == "faster"
+            jam.change(tempo=round(jam.state.tempo * (1.12 if up else 0.89)))
+            self.speak_dialog(what, expect_response=True)
 
     def command(self, utterance: str) -> bool:
         """Do what `utterance` asks of the band; False when it asks nothing of it."""
-        w, jam = self.words(), self.jam
-        if w.has(utterance, "finish"):
-            self._finish()
-            return True
-        parts = w.parts(utterance)
-        if w.has(utterance, "remove") and parts:
-            gone = jam.remove(*parts)
-            if gone:
-                self.speak_dialog("removed", {"part": self._name(gone[0])}, expect_response=True)
-            return True
-        if w.has(utterance, "everyone"):
-            self._add(jam.state.style.band, everyone=True)
-            return True
-        if parts:
-            self._add(parts)
-            return True
-        style = w.style(utterance)
-        if style and STYLES[style] is not jam.state.style:
-            jam.change(style=STYLES[style])
-            self.speak_dialog("style", {"style": style}, expect_response=True)
-            return True
-        key = w.key(utterance)
-        if key:
-            jam.change(key=key)
-            self.speak_dialog("key", {"key": w.spoken_key(key)}, expect_response=True)
-            return True
-        tempo = w.tempo(utterance)
-        if tempo:
-            jam.change(tempo=tempo)
-            self.speak_dialog("tempo", {"tempo": jam.state.tempo}, expect_response=True)
-            return True
-        if w.has(utterance, "faster") or w.has(utterance, "slower"):
-            up = w.has(utterance, "faster")
-            jam.change(tempo=round(jam.state.tempo * (1.12 if up else 0.89)))
-            self.speak_dialog("faster" if up else "slower", expect_response=True)
-            return True
-        return False
+        action = self.understand(utterance)
+        if action:
+            self.do(*action)
+        return bool(action)
 
     def _add(self, parts, everyone=False):
         new = self.jam.add(*parts)
@@ -161,6 +196,15 @@ class JamBandSkill(OVOSSkill):
                 self.speak_dialog("the_end")
         threading.Timer(delay, thanks).start()
 
+    def _keep_active(self):
+        """What is said goes to the jam first (converse) while it plays."""
+        activate = getattr(self, "activate", None) or getattr(self, "make_active", None)
+        if activate:
+            try:
+                activate()
+            except Exception:
+                pass
+
     # ------------------------------------------------------------ bus and screen
     def _send(self, msg_type: str, data: dict):
         self.bus.emit(Message(msg_type, data, {"skill_id": self.skill_id}))
@@ -170,12 +214,7 @@ class JamBandSkill(OVOSSkill):
         if not jam or not jam.running:
             return
         if bar % KEEP_ACTIVE_BARS == 0:
-            activate = getattr(self, "activate", None) or getattr(self, "make_active", None)
-            if activate:
-                try:
-                    activate()
-                except Exception:
-                    pass
+            self._keep_active()
         st = jam.state
         prog = st.progression()
         upcoming = [prog[(bar + k) % len(prog)] for k in range(1, 5)]
