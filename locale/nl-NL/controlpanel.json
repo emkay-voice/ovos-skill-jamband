@@ -1,0 +1,13 @@
+{
+ "jamband.title": "Jamband",
+ "nav.group.music": "Muziek",
+ "jamband.intro": "De jams die je hebt bewaard, en die bij de skill horen. Speel er een af op het apparaat, geef hem een andere naam, neem hem mee naar een ander programma als MIDI-bestand of verwijder hem.",
+ "jamband.playing": "Speelt nu: {playing}",
+ "jamband.mine.title": "Jouw jams",
+ "jamband.skill.title": "Jams die bij de skill horen",
+ "jamband.ask": "Zeg \"laten we jammen\" voor een nieuwe, of \"verras me\" voor een die Emkay verzint.",
+ "jamband.meta": "{style} in {key} · {tempo} bpm · {bars} maten",
+ "jamband.midi": "MIDI downloaden",
+ "jamband.sure": "Deze jam van het apparaat verwijderen?",
+ "jamband.none": "Nog geen bewaarde jams. Zeg aan het eind van een jam ja als gevraagd wordt of hij bewaard moet worden."
+}

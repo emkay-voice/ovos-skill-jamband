@@ -152,8 +152,10 @@ left for the rest of OVOS.
 
 ## In the control panel
 
-With [ovos-control-panel](https://github.com/OpenVoiceOS/ovos-control-panel) on the device, the skill brings
-its own page, **Jam band**, under **Music**. There you can:
+With [ovos-control-panel](https://github.com/OpenVoiceOS/ovos-control-panel) on the device, the skill has
+its own page, **Jam band**, under **Music**. It is described in `controlpanel.json` (strings in
+`locale/<lang>/controlpanel.json`), and the panel draws it; no code of the skill runs in the panel.
+There you can:
 
 - see your saved jams, and the ones that come with the skill, with their style, key, tempo and length,
 - play one on the device, and stop it,

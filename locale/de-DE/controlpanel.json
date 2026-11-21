@@ -1,0 +1,13 @@
+{
+ "jamband.title": "Jamband",
+ "nav.group.music": "Musik",
+ "jamband.intro": "Die Jams, die du gespeichert hast, und die, die mit dem Skill kommen. Spiel eines auf dem Gerät, gib ihm einen anderen Namen, nimm es als MIDI-Datei in ein anderes Programm mit oder lösche es.",
+ "jamband.playing": "Läuft gerade: {playing}",
+ "jamband.mine.title": "Deine Jams",
+ "jamband.skill.title": "Jams, die mit dem Skill kommen",
+ "jamband.ask": "Sag „lass uns jammen“ für ein neues oder „überrasch mich“ für eins, das Emkay sich ausdenkt.",
+ "jamband.meta": "{style} in {key} · {tempo} BPM · {bars} Takte",
+ "jamband.midi": "MIDI herunterladen",
+ "jamband.sure": "Dieses Jam vom Gerät löschen?",
+ "jamband.none": "Noch keine gespeicherten Jams. Sag am Ende eines Jams ja, wenn du gefragt wirst, ob es gespeichert werden soll."
+}
