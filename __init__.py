@@ -537,6 +537,7 @@ class JamBandSkill(ConversationalSkill):
         self.playing_name = ""
 
     def _save(self, name: str, recording: dict | None):
+        name = name[:1].upper() + name[1:]            # "sunday reggae" from the STT: "Sunday reggae"
         if not recording:
             self.speak_dialog("ok")
             return
