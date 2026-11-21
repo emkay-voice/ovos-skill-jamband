@@ -19,6 +19,7 @@ changed: the script plays until you say something.
 from __future__ import annotations
 
 import random
+import sys
 import threading
 import time
 from dataclasses import dataclass, field
@@ -147,6 +148,7 @@ class Jam:
         self.ending = False
         self._stop = threading.Event()
         self._thread = None
+        self._ticking = False              # by timer instead (a browser)
         self._wake = threading.Event()
 
     # ------------------------------------------------------------ timing
@@ -247,35 +249,53 @@ class Jam:
             ev += [self._seconds(n, beat) for n in lead_line(st.melody, pos % st.melody.bars, LEAD_CHANNEL)]
         return ev
 
+    def _step(self) -> float:
+        """Send what is due (keeping a bar ahead); the seconds until more is."""
+        with self.lock:
+            now = time.time()
+            if self.bar_start is None:
+                self.bar_start = now + self.latency + 0.3
+            # keep one bar ahead: send bar n when bar n-1 starts
+            while not self._stop.is_set() and self.bar_start - now < self.bar_seconds + self.latency:
+                self._play_script(self.bar)
+                if self._stop.is_set():
+                    break
+                self._schedule(self.bar, self.bar_start)
+                started = self.bar
+                if self.on_bar:
+                    prog = self.state.progression()
+                    pos = self.position(started)
+                    threading.Timer(max(0.0, self.bar_start - now), self.on_bar,
+                                    (started, prog[pos], prog[(pos + 1) % len(prog)])).start()
+                self.entering = set()
+                if self.ending:
+                    self._stop.set()
+                    if self.on_end:
+                        threading.Timer(max(0.0, self.bar_start - now) + self.bar_seconds, self.on_end).start()
+                    break
+                self.bar += 1
+                self.bar_start += self.bar_seconds
+            return self.bar_start - self.bar_seconds - self.latency - time.time()
+
     def _run(self):
+        """A thread: send, wait until more is due (or something changed), again."""
         while not self._stop.is_set():
-            with self.lock:
-                now = time.time()
-                if self.bar_start is None:
-                    self.bar_start = now + self.latency + 0.3
-                # keep one bar ahead: send bar n when bar n-1 starts
-                while self.bar_start - now < self.bar_seconds + self.latency:
-                    self._play_script(self.bar)
-                    if self._stop.is_set():
-                        break
-                    self._schedule(self.bar, self.bar_start)
-                    started = self.bar
-                    if self.on_bar:
-                        prog = self.state.progression()
-                        pos = self.position(started)
-                        threading.Timer(max(0.0, self.bar_start - now), self.on_bar,
-                                        (started, prog[pos], prog[(pos + 1) % len(prog)])).start()
-                    self.entering = set()
-                    if self.ending:
-                        self._stop.set()
-                        if self.on_end:
-                            threading.Timer(max(0.0, self.bar_start - now) + self.bar_seconds, self.on_end).start()
-                        break
-                    self.bar += 1
-                    self.bar_start += self.bar_seconds
-                wait = self.bar_start - self.bar_seconds - self.latency - time.time()
+            wait = self._step()
             self._wake.clear()
             self._wake.wait(max(0.02, min(wait, 0.5)))
+
+    def _tick(self):
+        """The same by timer, in a browser (Emkay): there a thread runs in
+        turns on one loop, and a wait may not really wait - a thread that
+        loops would keep the loop to itself, and Emkay would hear nothing
+        while the band plays (as ovos-phal-plugin-midi's engine does it)."""
+        if self._stop.is_set():
+            return
+        wait = self._step()
+        if not self._stop.is_set():
+            t = threading.Timer(max(0.02, min(wait, 0.25)), self._tick)
+            t.daemon = True
+            t.start()
 
     def _play_script(self, bar: int):
         """A saved jam: do what was done at this bar."""
@@ -341,11 +361,17 @@ class Jam:
             self._resend()
             self._apply(what, args or {})
             self.log.append({"bar": self.bar, "do": what, "args": args or {}})
+            if self._ticking:          # no thread to wake: send the bar taken back now
+                self._step()
 
     # ------------------------------------------------------------ control
     def start(self):
-        self._thread = threading.Thread(target=self._run, name="jam", daemon=True)
-        self._thread.start()
+        if sys.platform == "emscripten":
+            self._ticking = True
+            self._tick()
+        else:
+            self._thread = threading.Thread(target=self._run, name="jam", daemon=True)
+            self._thread.start()
 
     def silent(self, on: bool):
         """Hold still (on) - the time goes on, nothing is played - or play again."""
@@ -357,6 +383,8 @@ class Jam:
                 self.send("ovos.midi.stop", {"source": self.source})
                 self.entering |= set(self.state.parts) | {"lead"}
             self._resend()
+            if self._ticking:
+                self._step()
 
     def take_over(self) -> bool:
         """Stop playing a saved jam's script: from now on it is a live jam. True if it was replaying."""
@@ -412,6 +440,8 @@ class Jam:
 
     @property
     def running(self) -> bool:
+        if self._ticking:
+            return not self._stop.is_set()
         return self._thread is not None and self._thread.is_alive() and not self._stop.is_set()
 
     @property

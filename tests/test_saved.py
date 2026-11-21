@@ -19,7 +19,19 @@ def live_bars(sent):
     return [bars[k] for k in sorted(bars)]
 
 
-def test_a_saved_jam_plays_as_it_was_played():
+import pytest
+
+
+@pytest.fixture(params=["thread", "timer"])
+def mode(request, monkeypatch):
+    """A jam runs in a thread - or by timer, as in a browser (Emkay)."""
+    if request.param == "timer":
+        import ovos_skill_jamband.jam as J
+        monkeypatch.setattr(J.sys, "platform", "emscripten")
+    return request.param
+
+
+def test_a_saved_jam_plays_as_it_was_played(mode):
     sent = []
     jam = Jam(lambda t, d: sent.append((t, d)), "jam", latency=0.02)
     jam.change(style=STYLES["blues"], tempo=220, parts=["drums"])
@@ -36,6 +48,7 @@ def test_a_saved_jam_plays_as_it_was_played():
     time.sleep(1.2)
     jam.finish()
     time.sleep(1.4)
+    assert jam._ticking == (mode == "timer") and not jam.running
     played = live_bars(sent)
     again = [ev for _, _, ev in render(jam.recording())]
     assert len(played) == len(again)
@@ -44,7 +57,7 @@ def test_a_saved_jam_plays_as_it_was_played():
     assert any(e[2] == 10 for bar in played for e in bar if e[0] == "note")        # the melody
 
 
-def test_replay_then_take_over():
+def test_replay_then_take_over(mode):
     rec = compose(tune_id="frere_jacques", style_name="pop")
     sent = []
     from ovos_skill_jamband.jam import State
