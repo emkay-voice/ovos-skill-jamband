@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ovos-skill-jamband"
-version = "0.2.0a3"
+version = "0.2.0a4"
 description = "OVOS jam band: ask for drums, then bass, then the whole band - a band you lead with your voice, in any style and key; your melody (hummed, played or said) or a tune everybody knows on top; solos, breaks, saved jams, and jams Emkay makes by itself - played by the device's MIDI instrument"
 readme = "README.md"
 license = {text = "Apache-2.0"}
