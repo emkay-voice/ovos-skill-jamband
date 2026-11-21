@@ -150,6 +150,32 @@ Emkay answers, it listens again, so you can keep leading the band without
 the wake word. Anything that isn't for the band ("what's the weather?") is
 left for the rest of OVOS.
 
+## In the control panel
+
+With [ovos-control-panel](https://github.com/OpenVoiceOS/ovos-control-panel) on the device, the skill brings
+its own page, **Jam band**, under **Music**. There you can:
+
+- see your saved jams, and the ones that come with the skill, with their style, key, tempo and length,
+- play one on the device, and stop it,
+- give one of yours another name (the one you say to hear it again),
+- download any of them as a MIDI file, to take to another program,
+- delete one of yours (the ones that come with the skill stay).
+
+Deleting needs the panel's access token.
+
+### The messages behind it
+
+| Message | Data | Answer (`<message>.response`) |
+|---|---|---|
+| `ovos.jamband.jams.list` | | `jams` (id, name in the device's language, bundled, saved, bars, style, key, tempo; yours newest first), `playing` |
+| `ovos.jamband.jams.rename` | `id`, `name` | as `list`, or `error` (`taken`, `not yours`) |
+| `ovos.jamband.jams.delete` | `id` | as `list`, or `error` |
+| `ovos.jamband.jams.midi` | `id` | `name`, `midi` (a Standard MIDI File, base64) |
+| `ovos.jamband.jams.play` | `id` | `playing` (the name); the jam starts once Emkay has said so |
+| `ovos.jamband.stop` | | as `list` |
+
+The skill's own jams have ids that start with `skill:`.
+
 ## Install
 ```bash
 pip install ovos-skill-jamband

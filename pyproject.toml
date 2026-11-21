@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ovos-skill-jamband"
-version = "0.2.0"
+version = "0.3.0a1"
 description = "OVOS jam band: ask for drums, then bass, then the whole band - a band you lead with your voice, in any style and key; your melody (hummed, played or said) or a tune everybody knows on top; solos, breaks, saved jams, and jams Emkay makes by itself - played by the device's MIDI instrument"
 readme = "README.md"
 license = {text = "Apache-2.0"}
@@ -25,7 +25,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest"]
+test = ["pytest", "fastapi", "httpx"]
 
 [project.urls]
 Homepage = "https://github.com/emkay-voice/ovos-skill-jamband"
@@ -36,11 +36,17 @@ Icon = "https://raw.githubusercontent.com/emkay-voice/ovos-skill-jamband/main/ic
 [project.entry-points."opm.skill"]
 "ovos-skill-jamband.emkay-voice" = "ovos_skill_jamband:JamBandSkill"
 
+# A page in ovos-control-panel (see panel/__init__.py). Only the panel loads it.
+[project.entry-points."opm.control_panel.page"]
+jamband = "ovos_skill_jamband.panel:PAGE"
+
 [tool.setuptools]
-packages = ["ovos_skill_jamband"]
+packages = ["ovos_skill_jamband", "ovos_skill_jamband.panel"]
 
 [tool.setuptools.package-dir]
 ovos_skill_jamband = ""
+"ovos_skill_jamband.panel" = "panel"
 
 [tool.setuptools.package-data]
 ovos_skill_jamband = ["locale/**/*", "*.png", "styles/*.json", "tunes/*.json", "jams/*.json"]
+"ovos_skill_jamband.panel" = ["page.html", "icon.svg", "i18n/*.json"]
