@@ -1,0 +1,19 @@
+{
+ "names": ["Twinkle twinkle little star", "Twinkle twinkle", "Blinke blinke lille stjerne", "Blinke lille stjerne", "Morgen kommt der Weihnachtsmann", "Funkel funkel kleiner Stern", "Ah vous dirai-je maman", "Altijd is Kortjakje ziek", "Estrellita dónde estás", "Brilla brilla la stellina", "Brilha brilha estrelinha", "Estrelleta", "Estreliña", "Izar txikia"],
+ "key": "C",
+ "say": {"da": "Blinke lille stjerne", "de": "Morgen kommt der Weihnachtsmann", "nl": "Altijd is Kortjakje ziek", "es": "Estrellita, dónde estás", "fr": "Ah ! vous dirai-je, maman", "it": "Brilla brilla la stellina", "pt": "Brilha brilha estrelinha", "ca": "Estrelleta", "gl": "Estreliña", "eu": "Izar txikia"},
+ "notes": [
+  "C4 C4 G4 G4",
+  "A4 A4 G4:2",
+  "F4 F4 E4 E4",
+  "D4 D4 C4:2",
+  "G4 G4 F4 F4",
+  "E4 E4 D4:2",
+  "G4 G4 F4 F4",
+  "E4 E4 D4:2",
+  "C4 C4 G4 G4",
+  "A4 A4 G4:2",
+  "F4 F4 E4 E4",
+  "D4 D4 C4:2"
+ ]
+}

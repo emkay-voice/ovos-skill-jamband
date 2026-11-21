@@ -17,12 +17,15 @@ ICON = {"drums": "🥁", "bass": "🎸", "piano": "🎹", "guitar": "🎸", "org
         "brass": "🎺", "sax": "🎷", "bandoneon": "🪗"}
 
 
-def render(title: str, chord: Chord, upcoming: list[Chord], playing: list[str], names: dict) -> str:
+def render(title: str, chord: Chord, upcoming: list[Chord], playing: list[str], names: dict, note: str = "") -> str:
     parts = [f'<rect width="{W}" height="{H}" fill="{BG}"/>',
              f'<text x="{W / 2}" y="70" font-size="36" fill="{DIM}" text-anchor="middle" '
              f'font-family="sans-serif">{escape(title)}</text>',
-             f'<text x="{W / 2}" y="330" font-size="220" font-weight="bold" fill="{LIT}" text-anchor="middle" '
+             f'<text x="{W / 2}" y="340" font-size="200" font-weight="bold" fill="{LIT}" text-anchor="middle" '
              f'font-family="sans-serif">{escape(chord.name)}</text>']
+    if note:
+        parts.append(f'<text x="{W / 2}" y="130" font-size="40" font-weight="bold" fill="{FG}" '
+                     f'text-anchor="middle" font-family="sans-serif">{escape(note)}</text>')
     for i, c in enumerate(upcoming[:4]):
         x = W / 2 + (i - 1.5) * 170
         parts.append(f'<text x="{x}" y="430" font-size="56" fill="{DIM if i else FG}" text-anchor="middle" '

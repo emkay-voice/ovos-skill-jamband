@@ -1,0 +1,9 @@
+{
+ "names": ["Beethoven's fifth", "Beethoven's fifth symphony", "The fifth symphony", "Skæbnesymfonien", "Beethovens femte", "Schicksalssinfonie", "Beethovens Fünfte", "De vijfde van Beethoven", "La quinta de Beethoven", "La cinquième de Beethoven", "La quinta di Beethoven", "A quinta de Beethoven", "La cinquena de Beethoven", "Beethovenen bosgarrena"],
+ "key": "Cm",
+ "say": {"da": "Skæbnesymfonien", "de": "Schicksalssinfonie"},
+ "notes": [
+  "r:.5 G4:.5 G4:.5 G4:.5 Eb4:2",
+  "r:.5 F4:.5 F4:.5 F4:.5 D4:2"
+ ]
+}

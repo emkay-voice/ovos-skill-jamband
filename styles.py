@@ -6,12 +6,20 @@ groove for every part, so "add the bass" in a swing gets a walking bass, in
 reggae a one-drop bass, in disco octaves.
 
 Parts: drums, bass, piano, guitar, organ, strings, brass, sax, bandoneon.
+
+The styles themselves are data: styles/<name>.json - tempo, key, chords,
+the band in the order it comes in, General MIDI programs, the drum pattern,
+the bass's kind and the comping rhythm of each part. A new file is a new
+style (its name is the file's; add the words for it to each locale's
+<name>.voc).
 """
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
+from pathlib import Path
 
-from .music import Chord, Key, note_in, voicing
+from .music import NAMES, Chord, Key, note_in, voicing
 
 CHANNEL = {"drums": 9, "bass": 1, "piano": 2, "guitar": 3, "strings": 4, "brass": 5,
            "organ": 6, "sax": 7, "bandoneon": 8}
@@ -35,100 +43,39 @@ class Style:
     comp: dict = field(default_factory=dict)     # part -> [(beat, beats)] chord hits
 
 
-def _hats(vel=(78, 56)):
-    return [(b / 2, HAT, vel[b % 2]) for b in range(8)]
+#: drums by name, as the style files write them
+DRUMS = {"kick": KICK, "rim": RIM, "snare": SNARE, "clap": CLAP, "hat": HAT, "pedal": PEDAL, "open": OPEN,
+         "crash": CRASH, "ride": RIDE, "tom": TOM}
+#: how a bass can walk (bar_notes below plays each)
+BASSES = ("walking", "boogie", "eighths", "octaves", "funk", "onedrop", "bossa", "tango", "roots")
+STYLE_DIR = Path(__file__).resolve().parent / "styles"
 
 
-STYLES = {
-    "swing": Style(
-        "swing", 140, Key(5), ["I6", "vi7", "ii7", "V7"],
-        {"bass": 32, "piano": 0, "guitar": 26, "organ": 16, "strings": 48, "brass": 61, "sax": 66,
-         "bandoneon": 23},
-        ["drums", "bass", "piano", "brass", "sax"], swing=True,
-        drums=[(b, RIDE, 104 if b % 2 else 92) for b in range(4)] + [(1.5, RIDE, 80), (3.5, RIDE, 80)]
-        + [(1, PEDAL, 92), (3, PEDAL, 92)] + [(b, KICK, 50) for b in range(4)] + [(3.5, SNARE, 50)],
-        bass="walking",
-        comp={"piano": [(0, 0.4), (1.5, 0.35)], "guitar": [(b, 0.4) for b in range(4)],
-              "organ": [(0, 3.9)], "bandoneon": [(0, 3.9)]}),
-    "blues": Style(
-        "blues", 92, Key(4), ["I7", "IV7", "I7", "I7", "IV7", "IV7", "I7", "I7", "V7", "IV7", "I7", "V7"],
-        {"bass": 33, "piano": 0, "guitar": 27, "organ": 17, "strings": 48, "brass": 61, "sax": 66,
-         "bandoneon": 23},
-        ["drums", "bass", "piano", "guitar", "organ"], swing=True,
-        drums=[(b / 2, HAT, 84 if b % 2 == 0 else 62) for b in range(8)]
-        + [(0, KICK, 104), (2, KICK, 96), (2.5, KICK, 70), (1, SNARE, 100), (3, SNARE, 100)],
-        bass="boogie",
-        comp={"piano": [(0.5, 0.3), (1.5, 0.3), (2.5, 0.3), (3.5, 0.3)],
-              "guitar": [(1, 0.35), (3, 0.35)], "organ": [(0, 3.9)], "bandoneon": [(0, 3.9)]}),
-    "rock": Style(
-        "rock", 120, Key(9), ["I", "V", "vi", "IV"],
-        {"bass": 33, "piano": 0, "guitar": 29, "organ": 18, "strings": 48, "brass": 61, "sax": 66,
-         "bandoneon": 23},
-        ["drums", "bass", "guitar", "piano", "organ"],
-        drums=_hats() + [(0, KICK, 112), (2, KICK, 108), (2.5, KICK, 84), (1, SNARE, 112), (3, SNARE, 112)],
-        bass="eighths",
-        comp={"piano": [(0, 1.9), (2, 1.9)], "guitar": [(b / 2, 0.45) for b in range(8)],
-              "organ": [(0, 3.9)], "bandoneon": [(0, 3.9)]}),
-    "pop": Style(
-        "pop", 104, Key(0), ["I", "V", "vi", "IV"],
-        {"bass": 33, "piano": 0, "guitar": 25, "organ": 16, "strings": 48, "brass": 61, "sax": 65,
-         "bandoneon": 23},
-        ["drums", "bass", "piano", "guitar", "strings"],
-        drums=_hats((70, 50)) + [(0, KICK, 108), (1.5, KICK, 84), (2, KICK, 104), (1, SNARE, 104), (3, SNARE, 104)],
-        bass="eighths",
-        comp={"piano": [(b, 0.9) for b in range(4)], "guitar": [(0, 0.4), (1.5, 0.4), (2, 0.4), (3, 0.4), (3.5, 0.4)],
-              "organ": [(0, 3.9)], "bandoneon": [(0, 3.9)]}),
-    "funk": Style(
-        "funk", 104, Key(4, True), ["i7", "i7", "IV7", "i7"],
-        {"bass": 36, "piano": 4, "guitar": 28, "organ": 17, "strings": 48, "brass": 61, "sax": 66,
-         "bandoneon": 23},
-        ["drums", "bass", "guitar", "piano", "brass"],
-        drums=[(b / 4, HAT, 80 if b % 2 == 0 else 52) for b in range(16)]
-        + [(0, KICK, 116), (0.75, KICK, 92), (2.5, KICK, 108), (1, SNARE, 112), (3, SNARE, 112),
-           (1.75, SNARE, 44), (3.25, SNARE, 44)],
-        bass="funk",
-        comp={"piano": [(0.5, 0.2), (1.75, 0.2), (2.5, 0.2), (3.75, 0.2)],
-              "guitar": [(b / 4, 0.12) for b in (1, 2, 5, 6, 9, 10, 13, 14)],
-              "organ": [(0, 3.9)], "bandoneon": [(0, 3.9)]}),
-    "disco": Style(
-        "disco", 120, Key(9, True), ["i7", "i7", "iv7", "v7"],
-        {"bass": 38, "piano": 4, "guitar": 28, "organ": 16, "strings": 48, "brass": 62, "sax": 65,
-         "bandoneon": 23},
-        ["drums", "bass", "strings", "guitar", "brass"],
-        drums=[(b, KICK, 112) for b in range(4)] + [(b + 0.5, OPEN, 78) for b in range(4)]
-        + [(b / 4, HAT, 44) for b in range(16)] + [(1, CLAP, 96), (3, CLAP, 96)],
-        bass="octaves",
-        comp={"piano": [(b + 0.5, 0.3) for b in range(4)], "guitar": [(b / 4, 0.1) for b in range(1, 16, 2)],
-              "organ": [(0, 3.9)], "bandoneon": [(0, 3.9)]}),
-    "reggae": Style(
-        "reggae", 76, Key(7), ["I", "IV", "I", "V"],
-        {"bass": 33, "piano": 0, "guitar": 27, "organ": 16, "strings": 48, "brass": 61, "sax": 66,
-         "bandoneon": 23},
-        ["drums", "bass", "guitar", "organ"],
-        drums=_hats((66, 46)) + [(2, KICK, 108), (2, RIM, 92)],
-        bass="onedrop",
-        comp={"piano": [(1, 0.2), (3, 0.2)], "guitar": [(1, 0.18), (3, 0.18)],
-              "organ": [(b + 0.5, 0.22) for b in range(4)], "bandoneon": [(0, 3.9)]}),
-    "bossa": Style(
-        "bossa", 128, Key(0), ["Imaj7", "Imaj7", "ii7", "V7"],
-        {"bass": 32, "piano": 4, "guitar": 24, "organ": 16, "strings": 48, "brass": 61, "sax": 66,
-         "bandoneon": 23},
-        ["drums", "bass", "guitar", "piano", "sax"],
-        drums=[(b / 2, HAT, 52) for b in range(8)] + [(0, KICK, 88), (1.5, KICK, 76), (2, KICK, 88), (3.5, KICK, 76)]
-        + [(0, RIM, 76), (0.75, RIM, 70), (1.5, RIM, 72), (2.5, RIM, 76), (3.25, RIM, 70)],
-        bass="bossa",
-        comp={"piano": [(0, 1.4), (1.5, 0.9), (3, 0.9)], "guitar": [(0, 0.7), (0.75, 0.6), (1.5, 0.9), (2.5, 0.7), (3.25, 0.6)],
-              "organ": [(0, 3.9)], "bandoneon": [(0, 3.9)]}),
-    "tango": Style(
-        "tango", 112, Key(2, True), ["i", "V7", "V7", "i", "iv", "i", "V7", "i"],
-        {"bass": 32, "piano": 0, "guitar": 24, "organ": 16, "strings": 48, "brass": 61, "sax": 66,
-         "bandoneon": 23},
-        ["bandoneon", "bass", "piano", "strings"],
-        drums=[(0, KICK, 96), (1.5, KICK, 70), (2, KICK, 90), (1, SNARE, 60), (3, SNARE, 66)],
-        bass="tango",
-        comp={"bandoneon": [(b, 0.32) for b in range(4)], "piano": [(0, 0.3), (2, 0.3)],
-              "guitar": [(0, 0.45), (1.5, 0.45), (3, 0.45)], "organ": [(0, 3.9)]}),
-}
+def parse_key(text: str) -> Key:
+    """"F", "Em", "C#m", "Bb" -> a Key."""
+    minor = text.endswith("m")
+    name = text[:-1] if minor else text
+    return Key(NAMES.index(name) if name in NAMES else NAMES.index(FLATS.get(name, name)), minor)
+
+
+FLATS = {"Db": "C#", "D#": "Eb", "Gb": "F#", "G#": "Ab", "A#": "Bb"}
+
+
+def load_style(path: Path) -> Style:
+    """A style from its JSON file (styles/<name>.json)."""
+    d = json.loads(Path(path).read_text(encoding="utf-8"))
+    return Style(
+        name=Path(path).stem, tempo=int(d["tempo"]), key=parse_key(d["key"]), progression=list(d["progression"]),
+        programs={k: int(v) for k, v in d["programs"].items()}, band=list(d["band"]), swing=bool(d.get("swing")),
+        drums=[(float(b), DRUMS[k] if isinstance(k, str) else int(k), int(v)) for k, b, v in d.get("drums", [])],
+        bass=d.get("bass", "roots"), comp={p: [(float(b), float(n)) for b, n in hits] for p, hits in d.get("comp", {}).items()})
+
+
+def load_styles(folder: Path = STYLE_DIR) -> dict:
+    return {p.stem: load_style(p) for p in sorted(Path(folder).glob("*.json"))}
+
+
+STYLES = load_styles()
 DEFAULT = "swing"
 
 

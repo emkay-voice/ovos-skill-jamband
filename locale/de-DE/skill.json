@@ -6,14 +6,17 @@
   "license": "Apache-2.0",
   "author": "emkay-voice",
   "name": "Jamband",
-  "description": "Eine Band, die du mit der Stimme leitest: erst Schlagzeug, dann Bass, dann die ganze Band - Swing, Blues, Rock, Funk, Disco, Reggae, Bossa oder Tango, in jeder Tonart. Gespielt vom MIDI-Instrument des Geräts.",
+  "description": "Eine Band, die du mit der Stimme leitest: erst Schlagzeug, dann Bass, dann die ganze Band - Swing, Blues, Rock, Funk, Disco, Reggae, Bossa oder Tango. Gib ihr eine Melodie (summen, spielen, Noten sagen oder ein bekanntes Lied wählen), wünsch dir Soli und Breaks, lass Emkay mit dir eine Jam bauen - oder ganz allein eine machen. Speichere deine Jams und spiel sie wieder. Gespielt vom MIDI-Instrument des Geräts.",
   "examples": [
     "lass uns jammen",
     "jam einen Blues in E",
     "Bass dazu",
-    "die ganze Band",
-    "schneller",
-    "mach Reggae draus",
+    "ein Saxofon-Solo",
+    "ein Reggae über Bruder Jakob",
+    "hier ist meine Melodie",
+    "hilf mir eine Jam zu bauen",
+    "überrasch mich",
+    "spiel meine Jam Freitagsblues",
     "lass uns aufhören"
   ],
   "tags": [

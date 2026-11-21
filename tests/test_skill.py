@@ -10,7 +10,7 @@ from conftest import ROOT
 
 
 @pytest.fixture
-def skill(monkeypatch):
+def skill(monkeypatch, tmp_path):
     monkeypatch.setattr(sk.OVOSSkill, "__init__", lambda self, *a, **k: None)
     monkeypatch.setattr(sk.ConversationalSkill, "__init__", lambda self, *a, **k: None)
     monkeypatch.setattr(sk.JamBandSkill, "activate", lambda self, *a, **k: None, raising=False)
@@ -24,6 +24,7 @@ def skill(monkeypatch):
     monkeypatch.setattr(sk.JamBandSkill, "gui", MagicMock(), raising=False)
     monkeypatch.setattr(sk.JamBandSkill, "dialog_renderer", MagicMock(render=lambda n, d: n[5:]), raising=False)
     s.speak_dialog = MagicMock()
+    s.file_system = MagicMock(path=str(tmp_path))
     yield s
     s.stop()
 
@@ -97,3 +98,62 @@ def test_locales_match():
     files = {p.name for p in (ROOT / "locale" / "en-US").iterdir()}
     for lang in langs:
         assert {p.name for p in (ROOT / "locale" / lang).iterdir()} == files, lang
+
+
+def say(skill, words):
+    return skill.converse(Message("", {"utterances": [words]}))
+
+
+def test_guided(skill):
+    skill.handle_guided(MagicMock(data={"utterance": "help me make a jam"}))
+    assert said(skill)[-1] == "guide_style" and skill.can_converse(Message("", {"utterances": ["blues"]}))
+    assert say(skill, "a blues please") and said(skill)[-1] == "guide_key"
+    assert say(skill, "E") and skill.jam.state.key.name == "E" and skill.jam.state.parts == ["drums"]
+    assert said(skill)[-1] == "guide_first"
+    assert say(skill, "yes") and skill.jam.state.parts == ["drums", "bass"] and said(skill)[-1] == "guide_next"
+    assert say(skill, "no thanks") and said(skill)[-1] == "guide_free"
+    assert say(skill, "a guitar solo") and said(skill)[-1] == "solo" and skill.jam.solo["part"] == "guitar"
+
+
+def test_finish_save_and_play_again(skill, monkeypatch, tmp_path):
+    monkeypatch.setattr(sk, "SAVE_AFTER_BARS", 0)
+    skill.handle_jam(MagicMock(data={"utterance": "jam a funk with drums at 220"}))
+    assert say(skill, "a break") and said(skill)[-1] == "break"
+    say(skill, "let's finish")
+    time.sleep(3 * 60 * 4 / 220)
+    assert said(skill)[-2:] == ["the_end", "save_ask"]
+    assert say(skill, "yes") and said(skill)[-1] == "save_name"
+    assert say(skill, "Friday funk") and said(skill)[-1] == "saved"
+    assert (tmp_path / "jams" / "friday-funk.json").exists() and (tmp_path / "jams" / "friday-funk.mid").exists()
+    skill.handle_play_saved(MagicMock(data={"name": "friday funk"}))
+    assert said(skill)[-1] == "playing" and skill.jam.state.style.name == "funk"
+    skill.handle_play_saved(MagicMock(data={"name": "kaffeblues"}))      # one that came with it, by its Danish name
+    assert said(skill)[-1] == "playing" and skill.jam.replaying and skill.jam.state.style.name == "blues"
+    assert say(skill, "faster") and "take_over" in said(skill)[-2:] and not skill.jam.replaying
+
+
+def test_a_tune_everybody_knows(skill):
+    skill.handle_jam(MagicMock(data={"utterance": "jam a reggae over frere jacques"}))
+    assert said(skill)[-1] == "tune" and skill.jam.state.melody and skill.jam.state.style.name == "reggae"
+    assert skill.jam.state.key.name == "C" and len(skill.jam.state.chords) == 8
+    assert say(skill, "now ode to joy") and skill.jam.state.melody.bars == 8
+
+
+def test_said_notes_while_jamming(skill):
+    skill.handle_jam(MagicMock(data={"utterance": "let's jam with drums"}))
+    assert say(skill, "the notes are A C E A G E") and said(skill)[-1] == "got_melody"
+    assert skill.jam.state.melody.pitches()[0] % 12 == 9 and skill.jam.state.lead == "sax"
+    assert say(skill, "the melody on guitar") and skill.jam.state.lead == "guitar"
+
+
+def test_surprise_and_the_lists(skill):
+    skill.handle_surprise(MagicMock(data={"utterance": "surprise me"}))
+    assert said(skill)[-1] == "surprise" and skill.jam.replaying and skill.jam.state.melody
+    skill.stop()
+    skill.handle_list(MagicMock(data={}))
+    name, data = skill.speak_dialog.call_args[0]
+    assert name == "list" and data["count"] >= 5 and "Coffee blues" in data["names"]
+    skill.handle_tunes(MagicMock(data={}))
+    assert said(skill)[-1] == "tunes"
+    skill.handle_delete(MagicMock(data={"name": "coffee blues"}))
+    assert said(skill)[-1] == "cant_delete"

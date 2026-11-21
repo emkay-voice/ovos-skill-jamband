@@ -1,0 +1,11 @@
+{
+ "names": ["In the Hall of the Mountain King", "Hall of the Mountain King", "Mountain King", "I Dovregubbens hall", "Dovregubbens hall", "In der Halle des Bergkönigs", "In de hal van de bergkoning", "En la gruta del rey de la montaña", "Dans l'antre du roi de la montagne", "Nell'antro del re della montagna", "Na gruta do rei da montanha", "A la cova del rei de la muntanya", "Na cova do rei da montaña", "Mendiko erregearen aretoan", "Peer Gynt"],
+ "key": "Am",
+ "say": {"da": "I Dovregubbens hal", "de": "In der Halle des Bergkönigs", "nl": "In de hal van de bergkoning", "fr": "Dans l'antre du roi de la montagne"},
+ "notes": [
+  "A4:.5 B4:.5 C5:.5 D5:.5 E5:.5 C5:.5 E5",
+  "D#5:.5 B4:.5 D#5 D5:.5 Bb4:.5 D5",
+  "A4:.5 B4:.5 C5:.5 D5:.5 E5:.5 C5:.5 E5:.5 A5:.5",
+  "G5:.5 E5:.5 C5:.5 E5:.5 G5:2"
+ ]
+}

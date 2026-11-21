@@ -39,6 +39,15 @@ SPOKEN = {
     "eu": ["do", "do diesa", "re", "mi bemol", "mi", "fa", "fa diesa", "sol", "la bemol", "la", "si bemol", "si"],
 }
 
+#: how speech recognition writes a spoken letter name
+SPELLED = {
+    "en": {"see": "c", "sea": "c", "cee": "c", "dee": "d", "ee": "e", "eff": "f", "gee": "g", "jee": "g",
+           "ay": "a", "bee": "b", "be": "b"},
+    "da": {"se": "c", "ce": "c", "de": "d", "ef": "f", "ge": "g", "hå": "h", "be": "b"},
+    "de": {"ce": "c", "de": "d", "ef": "f", "ge": "g", "ha": "h", "be": "b"},
+    "nl": {"see": "c", "cee": "c", "dee": "d", "ef": "f", "gee": "g", "bee": "b"},
+}
+
 
 class Words:
     def __init__(self, locale_dir: Path, lang: str):
@@ -104,6 +113,34 @@ class Words:
             # only after "in", or with major/minor or a sharp/flat sign
             if before in KEY_PREPOSITIONS or is_minor or is_major or any(c in tok for c in "#♯♭"):
                 return Key(pc, is_minor)
+        return None
+
+    def notes(self, utterance: str, strict: bool = True):
+        """A melody said as note names ("C D E C", "do re mi do"), or None.
+        `strict`: most of the words must be notes (else a sentence like "a
+        bass in E" would be a tune)."""
+        from .melody import from_names
+        tokens = normal(utterance).replace("-", " ").split()
+        lang = self.lang
+        spelled = SPELLED.get(lang, {})
+        tokens = [spelled.get(t, t) for t in tokens]
+        rest = set(self.voc.get("rest", []))
+        found = [t for i, t in enumerate(tokens) if note(t, "", lang)[0] is not None or t in rest]
+        if len(found) < 3 or (strict and len(found) < 0.6 * len(tokens)):
+            return None
+        return from_names(tokens, lambda t, after: note(t, after, lang), rest)
+
+    def bare_key(self, utterance: str) -> Key | None:
+        """The answer to "which key?": a note name alone will do ("E", "fis mol")."""
+        tokens = normal(utterance).replace("-", " ").split()
+        if not tokens or len(tokens) > 4:
+            return None
+        minor = self.voc.get("minor", [])
+        for i, tok in enumerate(tokens):
+            pc, used = note(tok, " ".join(tokens[i + 1:i + 3]), self.lang)
+            if pc is not None:
+                after = tokens[i + 1 + used:i + 2 + used]
+                return Key(pc, bool(after and after[0] in minor))
         return None
 
     def spoken_key(self, key: Key) -> str:

@@ -1,0 +1,15 @@
+{
+ "names": ["Ode to Joy", "Beethoven's ninth", "Ode til glæden", "Ode an die Freude", "Ode aan de vreugde", "Himno de la alegría", "Oda a la alegría", "Hymne à la joie", "Inno alla gioia", "Ode à alegria", "Hino da alegria", "Oda a l'alegria", "Himno da alegría", "Bozkariorako oda", "Europe's anthem"],
+ "key": "C",
+ "say": {"da": "Ode til glæden", "de": "Ode an die Freude", "nl": "Ode aan de vreugde", "es": "Himno de la alegría", "fr": "Hymne à la joie", "it": "Inno alla gioia", "pt": "Hino da alegria", "ca": "Oda a l'alegria", "gl": "Himno da alegría", "eu": "Bozkariorako oda"},
+ "notes": [
+  "E4 E4 F4 G4",
+  "G4 F4 E4 D4",
+  "C4 C4 D4 E4",
+  "E4:1.5 D4:.5 D4:2",
+  "E4 E4 F4 G4",
+  "G4 F4 E4 D4",
+  "C4 C4 D4 E4",
+  "D4:1.5 C4:.5 C4:2"
+ ]
+}

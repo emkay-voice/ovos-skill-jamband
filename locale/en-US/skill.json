@@ -6,14 +6,17 @@
   "license": "Apache-2.0",
   "author": "emkay-voice",
   "name": "Jam Band",
-  "description": "A band you lead with your voice: ask for drums, then bass, then the whole band - in swing, blues, rock, funk, disco, reggae, bossa or tango, in any key. Played by the device's MIDI instrument.",
+  "description": "A band you lead with your voice: ask for drums, then bass, then the whole band - in swing, blues, rock, funk, disco, reggae, bossa or tango. Give it a melody (hum it, play it, say the notes, or pick a tune everybody knows), ask for solos and breaks, let Emkay build a jam with you - or make one all by itself. Save your jams and play them again. Played by the device's MIDI instrument.",
   "examples": [
     "let's jam",
     "jam a blues in E",
     "add the bass",
-    "the whole band",
-    "faster",
-    "make it reggae",
+    "a sax solo",
+    "a reggae over Frère Jacques",
+    "here's my melody",
+    "help me make a jam",
+    "surprise me",
+    "play my jam Friday blues",
     "let's finish"
   ],
   "tags": [

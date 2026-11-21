@@ -1,0 +1,22 @@
+{
+ "tempo": 112,
+ "key": "Dm",
+ "progression": ["i", "V7", "V7", "i", "iv", "i", "V7", "i"],
+ "band": ["bandoneon", "bass", "piano", "strings"],
+ "swing": false,
+ "bass": "tango",
+ "programs": {"bass": 32, "piano": 0, "guitar": 24, "organ": 16, "strings": 48, "brass": 61, "sax": 66, "bandoneon": 23},
+ "drums": [
+  ["kick", 0, 96],
+  ["kick", 1.5, 70],
+  ["kick", 2, 90],
+  ["snare", 1, 60],
+  ["snare", 3, 66]
+ ],
+ "comp": {
+  "bandoneon": [[0, 0.32], [1, 0.32], [2, 0.32], [3, 0.32]],
+  "piano": [[0, 0.3], [2, 0.3]],
+  "guitar": [[0, 0.45], [1.5, 0.45], [3, 0.45]],
+  "organ": [[0, 3.9]]
+ }
+}

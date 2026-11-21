@@ -6,14 +6,17 @@
   "license": "Apache-2.0",
   "author": "emkay-voice",
   "name": "Banda de jam",
-  "description": "Una banda que diriges con la voz: pide batería, luego bajo, luego toda la banda - swing, blues, rock, funk, disco, reggae, bossa o tango, en cualquier tono. La toca el instrumento MIDI del dispositivo.",
+  "description": "Una banda que diriges con la voz: pide batería, luego bajo, luego toda la banda - swing, blues, rock, funk, disco, reggae, bossa o tango. Dale una melodía (tarareada, tocada, diciendo las notas o una canción que todos conocen), pide solos y breaks, deja que Emkay construya una jam contigo - o que haga una él solo. Guarda tus jams y vuelve a tocarlas. La toca el instrumento MIDI del dispositivo.",
   "examples": [
     "vamos a improvisar",
     "un blues en mi",
     "añade el bajo",
-    "toda la banda",
-    "más rápido",
-    "ponlo en reggae",
+    "un solo de saxo",
+    "un reggae sobre Martinillo",
+    "aquí está mi melodía",
+    "ayúdame a hacer una jam",
+    "sorpréndeme",
+    "toca mi jam Blues del viernes",
     "terminemos"
   ],
   "tags": [

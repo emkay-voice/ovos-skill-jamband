@@ -35,6 +35,9 @@ jobs:
           ls dist/*-py3-none-any.whl
           unzip -p dist/*.whl '*.dist-info/entry_points.txt'
           unzip -l dist/*.whl | grep -q 'locale/da-DK/jam.intent'
+          unzip -l dist/*.whl | grep -q 'tunes/frere_jacques.json'
+          unzip -l dist/*.whl | grep -q 'styles/swing.json'
+          unzip -l dist/*.whl | grep -q 'jams/coffee-blues.json'
       - uses: actions/upload-artifact@v4
         with:
           name: dist
