@@ -157,3 +157,15 @@ def test_surprise_and_the_lists(skill):
     assert said(skill)[-1] == "tunes"
     skill.handle_delete(MagicMock(data={"name": "coffee blues"}))
     assert said(skill)[-1] == "cant_delete"
+
+
+def test_in_danish(skill, monkeypatch):
+    monkeypatch.setattr(sk.JamBandSkill, "lang", "da-DK", raising=False)
+    skill.handle_jam(MagicMock(data={"utterance": "lad os jamme en reggae over mester jakob"}))
+    assert said(skill)[-1] == "tune" and skill.jam.state.style.name == "reggae" and skill.jam.state.melody
+    assert say(skill, "en guitar solo") and skill.jam.solo["part"] == "guitar"
+    assert say(skill, "et break") and said(skill)[-1] == "break"
+    assert say(skill, "forfra") and said(skill)[-1] == "top"
+    assert say(skill, "tonerne er a c e a") and said(skill)[-1] == "got_melody"
+    assert say(skill, "melodien på trompeter") and skill.jam.state.lead == "brass"
+    assert say(skill, "gem det som fredagsreggae") and said(skill)[-1] == "saved"
