@@ -1,0 +1,13 @@
+{
+ "jamband.title": "Banda de jam",
+ "nav.group.music": "Música",
+ "jamband.intro": "As jams que guardou e as que vêm com a skill. Toque uma no dispositivo, dê-lhe outro nome, leve-a para outro programa como ficheiro MIDI ou apague-a.",
+ "jamband.playing": "A tocar agora: {playing}",
+ "jamband.mine.title": "As suas jams",
+ "jamband.skill.title": "Jams que vêm com a skill",
+ "jamband.ask": "Diga «vamos fazer uma jam» para começar uma nova, ou «surpreende-me» para uma que o Emkay invente.",
+ "jamband.meta": "{style} em {key} · {tempo} bpm · {bars} compassos",
+ "jamband.midi": "Descarregar MIDI",
+ "jamband.sure": "Apagar esta jam do dispositivo?",
+ "jamband.none": "Ainda não há jams guardadas. No fim de uma jam, diga que sim quando lhe perguntarem se a quer guardar."
+}

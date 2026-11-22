@@ -1,0 +1,26 @@
+{
+ "controlpanel": 1,
+ "id": "jamband",
+ "title": "jamband.title",
+ "group": "music",
+ "groups": [{"id": "music", "title": {"key": "nav.group.music", "label": "Music"}, "order": 6, "level": "everyday"}],
+ "order": 10,
+ "icon": "controlpanel.svg",
+ "bus": "ovos.jamband.",
+ "blocks": [
+  {"type": "text", "text": "jamband.intro"},
+  {"type": "status", "query": "ovos.jamband.jams.list", "show": "playing", "text": "jamband.playing",
+   "actions": [{"label": "common.stop", "send": "ovos.jamband.stop"}]},
+  {"type": "list", "query": "ovos.jamband.jams.list", "items": "jams", "key": "id", "title": "{name}",
+   "meta": "jamband.meta", "empty": "jamband.none",
+   "split": {"by": "bundled", "false": "jamband.mine.title", "true": "jamband.skill.title"},
+   "rename": {"field": "name", "send": "ovos.jamband.jams.rename", "when": "!bundled"},
+   "actions": [
+    {"label": "common.play", "send": "ovos.jamband.jams.play"},
+    {"label": "jamband.midi", "download": "ovos.jamband.jams.midi",
+     "file": {"data": "midi", "name": "{name}.mid", "type": "audio/midi"}},
+    {"label": "common.delete", "send": "ovos.jamband.jams.delete", "when": "!bundled", "confirm": "jamband.sure"}
+   ]},
+  {"type": "text", "text": "jamband.ask"}
+ ]
+}

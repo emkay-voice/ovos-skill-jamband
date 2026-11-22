@@ -1,0 +1,13 @@
+{
+ "jamband.title": "Jam band",
+ "nav.group.music": "Music",
+ "jamband.intro": "The jams you have saved, and the ones that come with the skill. Play one on the device, give it another name, take it to another program as a MIDI file, or delete it.",
+ "jamband.playing": "Playing now: {playing}",
+ "jamband.mine.title": "Your jams",
+ "jamband.skill.title": "Jams that come with the skill",
+ "jamband.ask": "Say \"let's jam\" to start a new one, or \"surprise me\" for one Emkay makes up.",
+ "jamband.meta": "{style} in {key} · {tempo} bpm · {bars} bars",
+ "jamband.midi": "Download MIDI",
+ "jamband.sure": "Delete this jam from the device?",
+ "jamband.none": "No saved jams yet. At the end of a jam, say yes when asked to save it."
+}

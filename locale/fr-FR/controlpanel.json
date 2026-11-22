@@ -1,0 +1,13 @@
+{
+ "jamband.title": "Groupe de jam",
+ "nav.group.music": "Musique",
+ "jamband.intro": "Les jams que vous avez enregistrées et celles fournies avec la skill. Jouez-en une sur l'appareil, renommez-la, emportez-la dans un autre programme en fichier MIDI ou supprimez-la.",
+ "jamband.playing": "En cours : {playing}",
+ "jamband.mine.title": "Vos jams",
+ "jamband.skill.title": "Jams fournies avec la skill",
+ "jamband.ask": "Dites « on jamme » pour en commencer une, ou « surprends-moi » pour une qu'Emkay invente.",
+ "jamband.meta": "{style} en {key} · {tempo} bpm · {bars} mesures",
+ "jamband.midi": "Télécharger le MIDI",
+ "jamband.sure": "Supprimer cette jam de l'appareil ?",
+ "jamband.none": "Aucune jam enregistrée pour l'instant. À la fin d'une jam, répondez oui quand on vous propose de l'enregistrer."
+}

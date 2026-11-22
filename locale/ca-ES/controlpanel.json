@@ -1,0 +1,13 @@
+{
+ "jamband.title": "Banda de jam",
+ "nav.group.music": "Música",
+ "jamband.intro": "Les jams que has desat i les que vénen amb la skill. Toca'n una al dispositiu, dona-li un altre nom, emporta-te-la a un altre programa com a fitxer MIDI o esborra-la.",
+ "jamband.playing": "Sonant ara: {playing}",
+ "jamband.mine.title": "Les teves jams",
+ "jamband.skill.title": "Jams que vénen amb la skill",
+ "jamband.ask": "Digues «fem una jam» per començar-ne una de nova, o «sorprèn-me» per una que s'inventi l'Emkay.",
+ "jamband.meta": "{style} en {key} · {tempo} ppm · {bars} compassos",
+ "jamband.midi": "Baixa el MIDI",
+ "jamband.sure": "Vols esborrar aquesta jam del dispositiu?",
+ "jamband.none": "Encara no hi ha jams desades. Al final d'una jam, digues que sí quan et pregunti si la vols desar."
+}

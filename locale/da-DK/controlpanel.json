@@ -1,0 +1,13 @@
+{
+ "jamband.title": "Jamband",
+ "nav.group.music": "Musik",
+ "jamband.intro": "De jams, du har gemt, og dem der følger med skillen. Spil en på enheden, giv den et andet navn, tag den med til et andet program som MIDI-fil, eller slet den.",
+ "jamband.playing": "Spiller nu: {playing}",
+ "jamband.mine.title": "Dine jams",
+ "jamband.skill.title": "Jams der følger med skillen",
+ "jamband.ask": "Sig \"lad os jamme\" for at starte en ny, eller \"overrask mig\" for en, Emkay finder på.",
+ "jamband.meta": "{style} i {key} · {tempo} bpm · {bars} takter",
+ "jamband.midi": "Hent MIDI",
+ "jamband.sure": "Slette denne jam fra enheden?",
+ "jamband.none": "Ingen gemte jams endnu. Sig ja, når du bliver spurgt, om jammen skal gemmes."
+}

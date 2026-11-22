@@ -1,0 +1,13 @@
+{
+ "jamband.title": "Jam taldea",
+ "nav.group.music": "Musika",
+ "jamband.intro": "Gorde dituzun jamak, eta skillarekin datozenak. Jo bat gailuan, eman beste izen bat, eraman beste programa batera MIDI fitxategi gisa, edo ezabatu.",
+ "jamband.playing": "Orain jotzen: {playing}",
+ "jamband.mine.title": "Zure jamak",
+ "jamband.skill.title": "Skillarekin datozen jamak",
+ "jamband.ask": "Esan «egin dezagun jam» berri bat hasteko, edo «harritu nazazu» Emkayk asmatutako baterako.",
+ "jamband.meta": "{style} {key} tonuan · {tempo} bpm · {bars} konpas",
+ "jamband.midi": "Deskargatu MIDIa",
+ "jamband.sure": "Jam hau gailutik ezabatu?",
+ "jamband.none": "Oraindik ez dago gordetako jamik. Jam baten amaieran, esan baietz gordetzeko galdetzen dizunean."
+}
