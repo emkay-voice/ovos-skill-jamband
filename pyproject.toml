@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ovos-skill-jamband"
-version = "0.3.0a2"
+version = "0.3.0a3"
 description = "OVOS jam band: ask for drums, then bass, then the whole band - a band you lead with your voice, in any style and key; your melody (hummed, played or said) or a tune everybody knows on top; solos, breaks, saved jams, and jams Emkay makes by itself - played by the device's MIDI instrument"
 readme = "README.md"
 license = {text = "Apache-2.0"}
 authors = [{name = "emkay-voice"}]
+maintainers = [{name = "Andreas Lorensen"}]
 requires-python = ">=3.10"
 keywords = ["ovos", "openvoiceos", "skill", "voice", "assistant", "music", "jam", "band", "midi", "backing track", "emkay"]
 classifiers = [
